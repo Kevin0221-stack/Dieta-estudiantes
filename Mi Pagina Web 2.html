@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietas y Rutinas para Estudiantes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .checkbox-group label {
+            flex: 1 1 calc(50% - 10px);
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .diet-plan {
+            background-color: #e7f3ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dietas y Rutinas Personalizadas</h1>
+    <p>Selecciona tus preferencias para recibir recomendaciones de dietas saludables y rutinas de ejercicio.</p>
+
+    <label for="diet">Selecciona tu preferencia alimenticia:</label>
+    <select id="diet">
+        <option value="balanceada">Balanceada</option>
+        <option value="vegetariana">Vegetariana</option>
+        <option value="vegana">Vegana</option>
+        <option value="alta-proteina">Alta en Proteínas</option>
+    </select>
+
+    <label for="exercise">Selecciona tu tipo de ejercicio favorito:</label>
+    <select id="exercise">
+        <option value="cardio">Cardio</option>
+        <option value="fuerza">Fuerza</option>
+        <option value="yoga">Yoga</option>
+        <option value="mixto">Mixto (Cardio y Fuerza)</option>
+    </select>
+
+    <label>Selecciona los alimentos que te gustan:</label>
+    <div class="checkbox-group">
+        <label><input type="checkbox" value="pollo" class="food"> Pollo</label>
+        <label><input type="checkbox" value="pescado" class="food"> Pescado</label>
+        <label><input type="checkbox" value="tofu" class="food"> Tofu</label>
+        <label><input type="checkbox" value="huevos" class="food"> Huevos</label>
+        <label><input type="checkbox" value="frutas" class="food"> Frutas</label>
+        <label><input type="checkbox" value="verduras" class="food"> Verduras</label>
+        <label><input type="checkbox" value="legumbres" class="food"> Legumbres</label>
+        <label><input type="checkbox" value="granos" class="food"> Granos enteros</label>
+    </div>
+
+    <button onclick="generatePlan()">Generar Plan</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function generatePlan() {
+        const selectedFoods = Array.from(document.querySelectorAll('.food:checked'))
+                                   .map(food => food.value);
+        if (selectedFoods.length === 0) {
+            document.getElementById('result').innerHTML = '<p>Por favor, selecciona al menos un alimento.</p>';
+            return;
+        }
+
+        let dietPlan = '<h2>Plan de Dieta Semanal</h2><div class="diet-plan">';
+
+        const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+        days.forEach(day => {
+            const randomFood1 = selectedFoods[Math.floor(Math.random() * selectedFoods.length)];
+            const randomFood2 = selectedFoods[Math.floor(Math.random() * selectedFoods.length)];
+            const randomFood3 = selectedFoods[Math.floor(Math.random() * selectedFoods.length)];
+
+            dietPlan += `
+                <p><strong>${day}:</strong></p>
+                <ul>
+                    <li>Desayuno: ${randomFood1} con frutas</li>
+                    <li>Almuerzo: ${randomFood2} acompañado de verduras</li>
+                    <li>Cena: ${randomFood3} con legumbres</li>
+                </ul>
+            `;
+        });
+
+        dietPlan += '</div>';
+
+        document.getElementById('result').innerHTML = dietPlan;
+    }
+</script>
+
+</body>
+</html>
